@@ -152,7 +152,7 @@ describe Twitter::Client do
       end.should raise_error(Twitter::Error::ClientError, "Oups")
     end
     it "catches MultiJson::DecodeError errors" do
-      subject.stub!(:connection).and_raise(MultiJson::DecodeError.new("unexpected token", [], "<!DOCTYPE html>"))
+      subject.stub!(:connection).and_raise(MultiJson::DecodeError.build(Exception.new("unexpected token"), "<!DOCTYPE html>"))
       lambda do
         subject.request(:get, "/path")
       end.should raise_error(Twitter::Error::DecodeError, "unexpected token")
