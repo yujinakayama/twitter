@@ -13,12 +13,12 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.activity_about_me
-      a_get("/i/activity/about_me.json").
-        should have_been_made
+      expect(a_get("/i/activity/about_me.json")).
+        to have_been_made
     end
     it "returns activity about me" do
       activity_about_me = @client.activity_about_me
-      activity_about_me.first.should be_a Twitter::Action::Mention
+      expect(activity_about_me.first).to be_a Twitter::Action::Mention
     end
   end
 
@@ -29,12 +29,12 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.activity_by_friends
-      a_get("/i/activity/by_friends.json").
-        should have_been_made
+      expect(a_get("/i/activity/by_friends.json")).
+        to have_been_made
     end
     it "returns activity by friends" do
       activity_by_friends = @client.activity_by_friends
-      activity_by_friends.first.should be_a Twitter::Action::Favorite
+      expect(activity_by_friends.first).to be_a Twitter::Action::Favorite
     end
   end
 

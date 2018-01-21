@@ -14,9 +14,9 @@ describe Twitter::Error::ServerError do
           to_return(:status => status)
       end
       it "raises #{exception.name}" do
-        lambda do
+        expect do
           @client.user_timeline('sferik')
-        end.should raise_error(exception)
+        end.to raise_error(exception)
       end
     end
   end

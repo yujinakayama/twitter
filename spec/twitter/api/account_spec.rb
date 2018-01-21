@@ -13,13 +13,13 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.verify_credentials
-      a_get("/1.1/account/verify_credentials.json").
-        should have_been_made
+      expect(a_get("/1.1/account/verify_credentials.json")).
+        to have_been_made
     end
     it "returns the requesting user" do
       user = @client.verify_credentials
-      user.should be_a Twitter::User
-      user.id.should eq 7505382
+      expect(user).to be_a Twitter::User
+      expect(user.id).to eq 7505382
     end
   end
 
@@ -31,14 +31,14 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.update_delivery_device("sms")
-      a_post("/1.1/account/update_delivery_device.json").
-        with(:body => {:device => "sms"}).
-        should have_been_made
+      expect(a_post("/1.1/account/update_delivery_device.json").
+        with(:body => {:device => "sms"})).
+        to have_been_made
     end
     it "returns a user" do
       user = @client.update_delivery_device("sms")
-      user.should be_a Twitter::User
-      user.id.should eq 7505382
+      expect(user).to be_a Twitter::User
+      expect(user.id).to eq 7505382
     end
   end
 
@@ -50,14 +50,14 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.update_profile(:url => "http://github.com/sferik/")
-      a_post("/1.1/account/update_profile.json").
-        with(:body => {:url => "http://github.com/sferik/"}).
-        should have_been_made
+      expect(a_post("/1.1/account/update_profile.json").
+        with(:body => {:url => "http://github.com/sferik/"})).
+        to have_been_made
     end
     it "returns a user" do
       user = @client.update_profile(:url => "http://github.com/sferik/")
-      user.should be_a Twitter::User
-      user.id.should eq 7505382
+      expect(user).to be_a Twitter::User
+      expect(user.id).to eq 7505382
     end
   end
 
@@ -68,13 +68,13 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.update_profile_background_image(fixture("we_concept_bg2.png"))
-      a_post("/1.1/account/update_profile_background_image.json").
-        should have_been_made
+      expect(a_post("/1.1/account/update_profile_background_image.json")).
+        to have_been_made
     end
     it "returns a user" do
       user = @client.update_profile_background_image(fixture("we_concept_bg2.png"))
-      user.should be_a Twitter::User
-      user.id.should eq 7505382
+      expect(user).to be_a Twitter::User
+      expect(user.id).to eq 7505382
     end
   end
 
@@ -86,14 +86,14 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.update_profile_colors(:profile_background_color => "000000")
-      a_post("/1.1/account/update_profile_colors.json").
-        with(:body => {:profile_background_color => "000000"}).
-        should have_been_made
+      expect(a_post("/1.1/account/update_profile_colors.json").
+        with(:body => {:profile_background_color => "000000"})).
+        to have_been_made
     end
     it "returns a user" do
       user = @client.update_profile_colors(:profile_background_color => "000000")
-      user.should be_a Twitter::User
-      user.id.should eq 7505382
+      expect(user).to be_a Twitter::User
+      expect(user.id).to eq 7505382
     end
   end
 
@@ -104,13 +104,13 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.update_profile_image(fixture("me.jpeg"))
-      a_post("/1.1/account/update_profile_image.json").
-        should have_been_made
+      expect(a_post("/1.1/account/update_profile_image.json")).
+        to have_been_made
     end
     it "returns a user" do
       user = @client.update_profile_image(fixture("me.jpeg"))
-      user.should be_a Twitter::User
-      user.id.should eq 7505382
+      expect(user).to be_a Twitter::User
+      expect(user.id).to eq 7505382
     end
   end
 
@@ -121,12 +121,12 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.update_profile_banner(fixture("me.jpeg"))
-      a_post("/1.1/account/update_profile_banner.json").
-        should have_been_made
+      expect(a_post("/1.1/account/update_profile_banner.json")).
+        to have_been_made
     end
     it "returns a user" do
       user = @client.update_profile_banner(fixture("me.jpeg"))
-      user.should be_nil
+      expect(user).to be_nil
     end
   end
 
@@ -137,12 +137,12 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.remove_profile_banner
-      a_post("/1.1/account/remove_profile_banner.json").
-        should have_been_made
+      expect(a_post("/1.1/account/remove_profile_banner.json")).
+        to have_been_made
     end
     it "returns a user" do
       user = @client.remove_profile_banner
-      user.should be_nil
+      expect(user).to be_nil
     end
   end
 
@@ -156,24 +156,24 @@ describe Twitter::API do
     end
     it "requests the correct resource on GET" do
       @client.settings
-      a_get("/1.1/account/settings.json").
-        should have_been_made
+      expect(a_get("/1.1/account/settings.json")).
+        to have_been_made
     end
     it "returns settings" do
       settings = @client.settings
-      settings.should be_a Twitter::Settings
-      settings.language.should eq 'en'
+      expect(settings).to be_a Twitter::Settings
+      expect(settings.language).to eq 'en'
     end
     it "requests the correct resource on POST" do
       @client.settings(:trend_location_woeid => "23424803")
-      a_post("/1.1/account/settings.json").
-        with(:body => {:trend_location_woeid => "23424803"}).
-        should have_been_made
+      expect(a_post("/1.1/account/settings.json").
+        with(:body => {:trend_location_woeid => "23424803"})).
+        to have_been_made
     end
     it "returns settings" do
       settings = @client.settings(:trend_location_woeid => "23424803")
-      settings.should be_a Twitter::Settings
-      settings.language.should eq 'en'
+      expect(settings).to be_a Twitter::Settings
+      expect(settings.language).to eq 'en'
     end
   end
 

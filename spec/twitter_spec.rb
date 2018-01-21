@@ -16,34 +16,34 @@ describe Twitter do
 
     it "requests the correct resource" do
       Twitter.user_timeline('sferik')
-      a_get("/1.1/statuses/user_timeline.json").
-        with(:query => {:screen_name => "sferik"}).
-        should have_been_made
+      expect(a_get("/1.1/statuses/user_timeline.json").
+        with(:query => {:screen_name => "sferik"})).
+        to have_been_made
     end
 
     it "returns the same results as a client" do
-      Twitter.user_timeline('sferik').should eq Twitter::Client.new.user_timeline('sferik')
+      expect(Twitter.user_timeline('sferik')).to eq Twitter::Client.new.user_timeline('sferik')
     end
 
   end
 
   describe '.respond_to?' do
     it "delegates to Twitter::Client" do
-      Twitter.respond_to?(:user).should be_true
+      expect(Twitter.respond_to?(:user)).to be_truthy
     end
     it "takes an optional argument" do
-      Twitter.respond_to?(:client, true).should be_true
+      expect(Twitter.respond_to?(:client, true)).to be_truthy
     end
   end
 
   describe ".client" do
     it "returns a Twitter::Client" do
-      Twitter.client.should be_a Twitter::Client
+      expect(Twitter.client).to be_a Twitter::Client
     end
 
     context "when the options don't change" do
       it "caches the client" do
-        Twitter.client.should eq Twitter.client
+        expect(Twitter.client).to eq Twitter.client
       end
     end
     context "when the options change" do
@@ -54,7 +54,7 @@ describe Twitter do
           config.consumer_secret = '123'
         end
         client2 = Twitter.client
-        client1.should_not eq client2
+        expect(client1).not_to eq client2
       end
     end
   end
@@ -65,7 +65,7 @@ describe Twitter do
         Twitter.configure do |config|
           config.send("#{key}=", key)
         end
-        Twitter.instance_variable_get(:"@#{key}").should eq key
+        expect(Twitter.instance_variable_get(:"@#{key}")).to eq key
       end
     end
   end
@@ -78,7 +78,7 @@ describe Twitter do
         config.oauth_token = 'OT'
         config.oauth_token_secret = 'OS'
       end
-      Twitter.credentials?.should be_true
+      expect(Twitter.credentials?).to be_truthy
     end
     it "returns false if any credentials are missing" do
       Twitter.configure do |config|
@@ -86,7 +86,7 @@ describe Twitter do
         config.consumer_secret = 'CS'
         config.oauth_token = 'OT'
       end
-      Twitter.credentials?.should be_false
+      expect(Twitter.credentials?).to be_falsey
     end
   end
 

@@ -14,16 +14,16 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.blocking
-      a_get("/1.1/blocks/list.json").
-        with(:query => {:cursor => "-1"}).
-        should have_been_made
+      expect(a_get("/1.1/blocks/list.json").
+        with(:query => {:cursor => "-1"})).
+        to have_been_made
     end
     it "returns an array of user objects that the authenticating user is blocking" do
       blocking = @client.blocking
-      blocking.should be_a Twitter::Cursor
-      blocking.users.should be_an Array
-      blocking.users.first.should be_a Twitter::User
-      blocking.users.first.id.should eq 7505382
+      expect(blocking).to be_a Twitter::Cursor
+      expect(blocking.users).to be_an Array
+      expect(blocking.users.first).to be_a Twitter::User
+      expect(blocking.users.first.id).to eq 7505382
     end
   end
 
@@ -35,15 +35,15 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.blocked_ids
-      a_get("/1.1/blocks/ids.json").
-        with(:query => {:cursor => "-1"}).
-        should have_been_made
+      expect(a_get("/1.1/blocks/ids.json").
+        with(:query => {:cursor => "-1"})).
+        to have_been_made
     end
     it "returns an array of numeric user IDs the authenticating user is blocking" do
       blocked_ids = @client.blocked_ids
-      blocked_ids.should be_a Twitter::Cursor
-      blocked_ids.ids.should be_an Array
-      blocked_ids.ids.first.should eq 14100886
+      expect(blocked_ids).to be_a Twitter::Cursor
+      expect(blocked_ids.ids).to be_an Array
+      expect(blocked_ids.ids.first).to eq 14100886
     end
   end
 
@@ -65,23 +65,23 @@ describe Twitter::API do
       end
       it "requests the correct resource" do
         @client.block?("sferik")
-        a_get("/1.1/blocks/ids.json").
-          with(:query => {:cursor => "-1"}).
-          should have_been_made
-        a_get("/1.1/blocks/ids.json").
-          with(:query => {:cursor => "1305102810874389703"}).
-          should have_been_made
-        a_get("/1.1/users/show.json").
-          with(:query => {:screen_name => "sferik"}).
-          should have_been_made
+        expect(a_get("/1.1/blocks/ids.json").
+          with(:query => {:cursor => "-1"})).
+          to have_been_made
+        expect(a_get("/1.1/blocks/ids.json").
+          with(:query => {:cursor => "1305102810874389703"})).
+          to have_been_made
+        expect(a_get("/1.1/users/show.json").
+          with(:query => {:screen_name => "sferik"})).
+          to have_been_made
       end
       it "returns true if block exists" do
         block = @client.block?("pengwynn")
-        block.should be_true
+        expect(block).to be_truthy
       end
       it "returns false if block does not exist" do
         block = @client.block?("sferik")
-        block.should be_false
+        expect(block).to be_falsey
       end
     end
     context "with a user ID passed" do
@@ -95,12 +95,12 @@ describe Twitter::API do
       end
       it "requests the correct resources" do
         @client.block?(7505382)
-        a_get("/1.1/blocks/ids.json").
-          with(:query => {:cursor => "-1"}).
-          should have_been_made
-        a_get("/1.1/blocks/ids.json").
-          with(:query => {:cursor => "1305102810874389703"}).
-          should have_been_made
+        expect(a_get("/1.1/blocks/ids.json").
+          with(:query => {:cursor => "-1"})).
+          to have_been_made
+        expect(a_get("/1.1/blocks/ids.json").
+          with(:query => {:cursor => "1305102810874389703"})).
+          to have_been_made
       end
     end
     context "with a user object passed" do
@@ -115,12 +115,12 @@ describe Twitter::API do
       it "requests the correct resources" do
         user = Twitter::User.new(:id => '7505382')
         @client.block?(user)
-        a_get("/1.1/blocks/ids.json").
-          with(:query => {:cursor => "-1"}).
-          should have_been_made
-        a_get("/1.1/blocks/ids.json").
-          with(:query => {:cursor => "1305102810874389703"}).
-          should have_been_made
+        expect(a_get("/1.1/blocks/ids.json").
+          with(:query => {:cursor => "-1"})).
+          to have_been_made
+        expect(a_get("/1.1/blocks/ids.json").
+          with(:query => {:cursor => "1305102810874389703"})).
+          to have_been_made
       end
     end
   end
@@ -133,14 +133,14 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.block("sferik")
-      a_post("/1.1/blocks/create.json").
-        should have_been_made
+      expect(a_post("/1.1/blocks/create.json")).
+        to have_been_made
     end
     it "returns an array of blocked users" do
       users = @client.block("sferik")
-      users.should be_an Array
-      users.first.should be_a Twitter::User
-      users.first.id.should eq 7505382
+      expect(users).to be_an Array
+      expect(users.first).to be_a Twitter::User
+      expect(users.first.id).to eq 7505382
     end
   end
 
@@ -152,15 +152,15 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.unblock("sferik")
-      a_post("/1.1/blocks/destroy.json").
-        with(:body => {:screen_name => "sferik"}).
-        should have_been_made
+      expect(a_post("/1.1/blocks/destroy.json").
+        with(:body => {:screen_name => "sferik"})).
+        to have_been_made
     end
     it "returns an array of un-blocked users" do
       users = @client.unblock("sferik")
-      users.should be_an Array
-      users.first.should be_a Twitter::User
-      users.first.id.should eq 7505382
+      expect(users).to be_an Array
+      expect(users.first).to be_a Twitter::User
+      expect(users.first.id).to eq 7505382
     end
   end
 

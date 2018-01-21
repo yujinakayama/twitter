@@ -14,15 +14,15 @@ describe Twitter::API do
     end
     it "requests the correct resource" do
       @client.report_spam("sferik")
-      a_post("/1.1/report_spam.json").
-        with(:body => {:screen_name => "sferik"}).
-        should have_been_made
+      expect(a_post("/1.1/report_spam.json").
+        with(:body => {:screen_name => "sferik"})).
+        to have_been_made
     end
     it "returns an array of users" do
       users = @client.report_spam("sferik")
-      users.should be_an Array
-      users.first.should be_a Twitter::User
-      users.first.id.should eq 7505382
+      expect(users).to be_an Array
+      expect(users.first).to be_a Twitter::User
+      expect(users.first.id).to eq 7505382
     end
   end
 

@@ -16,9 +16,9 @@ describe Twitter::Error::ClientError do
             to_return(:status => status, :body => body_message)
         end
         it "raises #{exception.name}" do
-          lambda do
+          expect do
             @client.user_timeline('sferik')
-          end.should raise_error(exception)
+          end.to raise_error(exception)
         end
       end
     end
@@ -31,9 +31,9 @@ describe Twitter::Error::ClientError do
         to_return(:status => 404, :body => fixture('no_user_matches.json'))
     end
     it "raises Twitter::Error::NotFound" do
-      lambda do
+      expect do
         @client.users('not_on_twitter')
-      end.should raise_error(Twitter::Error::NotFound)
+      end.to raise_error(Twitter::Error::NotFound)
     end
   end
 
